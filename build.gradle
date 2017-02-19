@@ -1,0 +1,39 @@
+task helloworld {
+
+    doFirst {
+        println 'start'
+    }
+
+    doLast {
+        println 'hello, gradlew'
+    }
+}
+
+// << measn doLast
+task startSession << {
+    chant()
+}
+
+def chant() {
+    ant.echo(message: 'call chant...')
+}
+
+3.times {
+    // 不定义<< doLast任务会在一开始就执行
+    task "task$it" << {
+        println "Gradlr rocks$it"
+    }
+}
+
+task0.dependsOn startSession
+task2.dependsOn task1, task0
+
+
+task groupTherapy(dependsOn: task2)
+
+// 包装器
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}
+
+
